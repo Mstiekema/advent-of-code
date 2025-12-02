@@ -44,24 +44,25 @@ fn main() {
 
         // Part 1: Increase the password if we end up at 0
         let prev_rotation = rotation;
-        rotation = base.rem_euclid(100);
+        rotation = base % 100;
         if rotation == 0 {
             password_p1 += 1;
         }
 
         // Part 2: Also add to 0 for each pass
-        let passes = (base / (100)).abs() as u16;
+        if direction == "R" {
+            password_p2 += (base / 100).abs() as u16;
+        } else { // direction == "L"
+            if prev_rotation == 0 {
+                password_p2 += (base / 100).abs() as u16;
+            } else if count > prev_rotation {
+                password_p2 += ((count - prev_rotation - 1) / 100).abs() as u16 + 1;
 
-        if rotation == 0 {
-            password_p2 += passes - 1;
-        } else {
-            password_p2 += passes;
-            if base <= 0 { // Direction == L
-                if prev_rotation != 0 {
+                if rotation == 0 {
                     password_p2 += 1;
                 }
-            } else if base >= 100 { // Direction == R
-                password_p2 -= 1;
+            } else if count == prev_rotation {
+                password_p2 += 1;
             }
         }
 
