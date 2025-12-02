@@ -2,7 +2,7 @@
 /// Advent of Code 2025
 /// Day 1
 /// Wrote on: 2025-12-01
-/// Last modified: 2025-12-01
+/// Last modified: 2025-12-02
 /// Written in: Rust
 /// https://adventofcode.com/2025/day/1
 //////////////////////////////////////////////////
@@ -80,6 +80,3 @@ fn main() {
     let mut file = fs::File::create("output").expect("Should be able to create output file");
     write!(&mut file, "{}\n{}", password_p1, password_p2).expect("Should be able to write to output file");
 }
-
-// 5516 should be close
-// 5604 should also be close
