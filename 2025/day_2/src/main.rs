@@ -7,7 +7,6 @@
 /// https://adventofcode.com/2025/day/2
 //////////////////////////////////////////////////
 use std::{fs, io::Write};
-use fancy_regex::Regex;
 
 fn main() {
     // Read the input
@@ -16,19 +15,33 @@ fn main() {
     let ranges: std::str::Split<'_, &str> = contents.split(",");
 
     // Part 1 - Get invalid IDs
-    let mut count: u16 = 0;
-    let re = Regex::new(r"\b(\w+)(\1)+\b").expect("Valid regex to check the id");
+    let mut count: u64 = 0;
     for range in ranges {
-        let split = range.split("-");
-        let start = split.nth(0);
-        let end = split.nth(1);
+        let mut split = range.split("-");
 
-        for entry in [start..end] {
-            let id: i16 = entry.parse().expect("The ID should be an integer");
+        let start: u64 = split
+            .nth(0)
+            .expect("There should be a start id")
+            .parse::<u64>()
+            .expect("The ID should be an integer");
+        let end: u64 = split
+            .nth(0)
+            .expect("There should be an end id")
+            .parse::<u64>()
+            .expect("The ID should be an integer");
 
-            // Check if ID is valid
-            if re.is_match(id) {
-                count += id;
+        for id in start..end+1 {
+            let id_str = id.to_string();
+            let id_div = id_str.len() / 2;
+
+            // Only len of 2n can be invalid
+            if id_str.len() % 2 == 0 {
+                let id_start = &id_str[0..id_div];
+                let id_end = &id_str[id_div..id_str.len()];
+                if id_start == id_end {
+                    count += id;
+                    println!("Invalid ID: {}", id);
+                }
             }
         }
     }
