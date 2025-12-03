@@ -2,7 +2,7 @@
 /// Advent of Code 2025
 /// Day 1
 /// Wrote on: 2025-12-01
-/// Last modified: 2025-12-02
+/// Last modified: 2025-12-03
 /// Written in: Rust
 /// https://adventofcode.com/2025/day/1
 //////////////////////////////////////////////////
@@ -65,9 +65,6 @@ fn main() {
                 password_p2 += 1;
             }
         }
-
-        // Print debugging step
-        println!("{} | {} | {}", passes, rotation, base);
 
         // Wrap around if the result is negative
         if rotation < 0 {
