@@ -27,7 +27,7 @@ use std::{fs, io::Write};
 fn main() {
     // Read the input
     let contents: String =
-        fs::read_to_string("input3.txt").expect("Should be able to read the input file");
+        fs::read_to_string("input.txt").expect("Should be able to read the input file");
 
     // Write the result
     println!("Result");
