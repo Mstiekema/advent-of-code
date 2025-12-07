@@ -4,7 +4,8 @@
     "./2025/day_2/Cargo.toml",
     "./2025/day_3/Cargo.toml",
     "./2025/day_4/Cargo.toml",
-    "./2025/day_5/Cargo.toml"
+    "./2025/day_5/Cargo.toml",
+    "./2025/day_6/Cargo.toml"
   ],
   "rust-analyzer.procMacro.enable": true,
   "rust-analyzer.checkOnSave": true
