@@ -11,41 +11,46 @@ use std::{fs, io::Write};
 fn main() {
     // Read the input
     let contents: String =
-        fs::read_to_string("input1.txt").expect("Should be able to read the input file");
+        fs::read_to_string("input.txt").expect("Should be able to read the input file");
     let rows: Vec<&str> = contents.split("\n").collect();
-    let arith_row = rows.last();
 
-    let mut matrix = rows.iter().map(|row| row.split_whitespace());
-    let formula_count = matrix.clone().next().iter().count();
+    let matrix = rows.iter().map(|row| row.split_whitespace());
+    let mut arith_row = matrix
+        .clone()
+        .last()
+        .expect("There should be a last operation row")
+        .map(|op| op.to_string());
+    let formula_count = arith_row.clone().count();
     let rows = matrix.clone().count();
+
+    println!("Formula count: {}", formula_count);
 
     // Resolve all formula's
     let mut total_count = 0;
     for col in 0..formula_count {
         let mut nums = vec![];
-        for row in 0..rows - 1 {
+        for row in 0..rows-1 {
             nums.push(
-                matrix.clone().into_iter().nth(row).expect("Get a number") // Parse to int!!
+                matrix
+                    .clone()
+                    .nth(row)
+                    .expect("Should be a column")
+                    .nth(col)
+                    .expect("Should be an entry in the row")
+                    .parse::<u64>()
+                    .expect("Each entry should be a number")
             );
         }
 
-        let mut col_count = 0;
-        let op = arith_row.iter().nth(0).expect("Should be an operator");
-        if op == &&"+" {
+        let col_count;
+        let op = arith_row.nth(0).expect("Should be an operator");
+        if op == "+" {
             col_count = nums.iter().fold(0, |acc, x| {
-                acc + x
-                    .nth(0)
-                    .expect("There should be a number at the next spot")
-                    .parse::<u32>()
-                    .expect("The next number should be an integer")
+                acc + *x
             })
         } else {
-            col_count = nums.iter().fold(1, |acc, x| {
-                acc * x
-                    .nth(0)
-                    .expect("There should be a number at the next spot")
-                    .parse::<u32>()
-                    .expect("The next number should be an integer")
+            col_count = nums.iter_mut().fold(1, |acc, x| {
+                acc * (*x)
             })
         }
         total_count += col_count
